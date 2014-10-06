@@ -12,7 +12,7 @@ class FFnet:
 		self.layercount = len(layers)
 		for i in xrange(0, self.layercount):
 			col = [0]*layers[j+1]
-			mat = [col]*layers[j]
+			mat = [col]*(layers[j]+1)
 			self.W.append(mat);
 
 	def initWeights(self, seed=None):
@@ -35,6 +35,7 @@ class FFnet:
 		return mat
 
 	def setWeights(self, wmat):
+		self.W = wmat
 
 	def forwprop(self, inp):
 
