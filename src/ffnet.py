@@ -3,11 +3,18 @@ FFnet
 """
 
 from random import Random
+from math import exp
+import numpy as np
+
+def sigmoid(x):
+	return 1/(1+exp(-x))
 
 class FFnet:
 
 	def __init__(self, layers):
 		self.W = []
+		self.inp = []
+		self.out = []
 		self.layers = layers
 		self.layercount = len(layers)
 		for i in xrange(0, self.layercount):
@@ -38,8 +45,16 @@ class FFnet:
 		self.W = wmat
 
 	def forwprop(self, inp):
+		self.inp += [inp]
+		for i in xrange(0, self.layercount-1):
+			self.out += [map(sigmoid, self.inp[i])]
+			self.inp += np.array(self.inp[i]).dot(np.array([1]+self.out[i])).tolist()
+		i = self.layercount-1
+		self.out += [map(sigmoid, self.inp[i])]
+		return self.out[i-1]
 
 	def backprop(self, err):
+		
 
 
 #import cudamat as cm                                                                    #import numpy as np 
